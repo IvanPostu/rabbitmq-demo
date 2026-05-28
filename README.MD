@@ -62,6 +62,15 @@ docker run -d \
   - install erlang OTP
   - install RabbitMQ
 
+- Create queue without exchange
+  - go to <http://localhost:15672> -> Queues -> Add queue
+  - <img src="./_forReadme/image copy.png" style="width: 1150px" />
+
+- Message arrives (Ready 2)
+  - <img src="./_forReadme/image copy 2.png" style="width: 1150px" />
+- Queues -> <queue name> -> Get messages
+  - <img src="./_forReadme/image copy 3.png" style="width: 1150px" />
+
 ## References
 
 - test
