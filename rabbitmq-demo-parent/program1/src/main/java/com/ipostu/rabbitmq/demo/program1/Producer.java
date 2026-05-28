@@ -4,6 +4,7 @@ package com.ipostu.rabbitmq.demo.program1;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -20,7 +21,12 @@ public class Producer {
         Channel channel = connection.createChannel();
 
         for (int i = 0; i < 10; i++) {
-            String message = "test message " + i + " " + System.currentTimeMillis();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("index", "" + i);
+            jsonObject.put("name", "Jim");
+            jsonObject.put("example", "test" );
+
+            String message = jsonObject.toString();
             channel.basicPublish("", "Queue-1", null, message.getBytes());
         }
 
