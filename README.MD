@@ -30,34 +30,38 @@ mvnw archetype:generate \
     -DinteractiveMode=false \
     -DgroupId=com.ipostu.rabbitmq.demo.program1 \
     -DartifactId=program1
+
+# on standalone setup
+# management-plugin should be enabled
+
+docker pull rabbitmq:4.3.1-management-alpine
+
+docker run -d \
+  --name rabbitmq \
+  -p 5672:5672 \
+  -p 15672:15672 \
+  rabbitmq:4.3.1-management-alpine
+
+# http://localhost:15672
+# username: guest
+# password: guest
 ```
 
-## Property: `spring.graphql.graphiql.enabled=true`
+## Other
 
-- path should be same as folder name where graphqls is kept
-- `http://localhost:8080/graphiql?path=/graphql`
-- <img src="./_forReadme/image.png" />
+- High Level Overview
+  - <img src="./_forReadme/image.png" style="width: 550px" />
 
-## Observation
+- Types of exchanges
+  - Direct
+  - Fanout
+  - Header
+  - Topic
 
-- Graphql doesn't support multipart file upload, to achieve this define a custom REST endpoint
-- (**To remember**) Maven dependency scopes
-  - compile(default) - packaged in artifact, available in compile,runtime and test
-  - provided - (NOT) packaged in artifact, available in compile,test, (NOT)runtime
-  - runtime - packaged in artifact, available in test, runtime, (NOT)compile
-  - test - (NOT) packaged in artifact, available in test-compile,test-runtime
-  - system - reference to .jar in local filesystem
-  - import - Centralized version management, works in combination with `<dependencyManagement>`
-
-## Todo
-
-- Add custom starter with soft default config
-- Add tests for each repository using test containers
-- Add tests for rest layer
+- Install rabbitmq
+  - install erlang OTP
+  - install RabbitMQ
 
 ## References
 
-- <https://stackoverflow.com/questions/38133808/spring-multiple-profiles-active>
-- <https://github.com/TejasRawat/task-management-service>
-- <https://maven.apache.org/plugins/maven-pmd-plugin/examples/multi-module-config.html>
-- <https://howtodoinjava.com/spring-data/elasticsearch-with-spring-boot-data/>
+- test
