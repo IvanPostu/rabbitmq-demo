@@ -68,7 +68,7 @@ docker run -d \
 
 - Message arrives (Ready 2)
   - <img src="./_forReadme/image copy 2.png" style="width: 1150px" />
-- Queues -> <queue name> -> Get messages
+- Queues -> {queue name} -> Get messages
   - <img src="./_forReadme/image copy 3.png" style="width: 1150px" />
 
 ## Two consumers - RoundRobin distribution fashion
@@ -77,6 +77,14 @@ docker run -d \
 - 2X `mvnw exec:java -Dexec.mainClass="com.ipostu.rabbitmq.demo.program1.Consumer" -f ./program1/pom.xml`
 - <img src="./_forReadme/image copy 4.png" style="width: 400px" />
 - <img src="./_forReadme/image copy 5.png" style="width: 400px" />
+
+## Remove messages from the queue - purge
+
+- Queues -> {queue name} -> Purge messages
+
+or
+
+- `rabbitmqctl purge_queue Queue-1`
 
 ## References
 
