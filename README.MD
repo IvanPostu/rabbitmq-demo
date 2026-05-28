@@ -71,6 +71,13 @@ docker run -d \
 - Queues -> <queue name> -> Get messages
   - <img src="./_forReadme/image copy 3.png" style="width: 1150px" />
 
+## Two consumers - RoundRobin distribution fashion
+
+- `cd rabbitmq-demo-parent/`
+- 2X `mvnw exec:java -Dexec.mainClass="com.ipostu.rabbitmq.demo.program1.Consumer" -f ./program1/pom.xml`
+- <img src="./_forReadme/image copy 4.png" style="width: 400px" />
+- <img src="./_forReadme/image copy 5.png" style="width: 400px" />
+
 ## References
 
 - test

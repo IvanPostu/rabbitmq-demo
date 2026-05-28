@@ -19,9 +19,10 @@ public class Producer {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        String message = "test message " + System.currentTimeMillis();
-
-        channel.basicPublish("", "Queue-1", null, message.getBytes());
+        for (int i = 0; i < 10; i++) {
+            String message = "test message " + i + " " + System.currentTimeMillis();
+            channel.basicPublish("", "Queue-1", null, message.getBytes());
+        }
 
         channel.close();
         connection.close();
