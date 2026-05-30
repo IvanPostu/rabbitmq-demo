@@ -42,6 +42,8 @@ docker run -d \
   -p 15672:15672 \
   rabbitmq:4.3.1-management-alpine
 
+docker start rabbitmq
+
 # http://localhost:15672
 # username: guest
 # password: guest
@@ -85,6 +87,17 @@ docker run -d \
 or
 
 - `rabbitmqctl purge_queue Queue-1`
+
+## Direct exchange
+
+- <img src="./_forReadme/image copy 6.png" style="width: 550px" />
+
+- Go to: Exchanges -> Add new exchange -> name:"Direct-Exchanges", type: Direct
+  - create 3 queues(Classic): AC, Mobile, TV
+- Go to Exchange: Direct-Exchanges
+  - add bindings: AC -> routingKey: ac
+  - add bindings: TV -> routingKey: tv
+  - add bindings: Mobile -> routingKey: mobile
 
 ## References
 
