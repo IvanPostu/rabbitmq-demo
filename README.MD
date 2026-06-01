@@ -126,6 +126,20 @@ or
   - bind: AC and Mobile to the **Fanout-Exchange**
   - on publish, routing key must be empty string, not null
 
+## Topic exchange
+
+- <img src="./_forReadme/image copy 11.png" style="width: 750px" />
+- In a RabbitMQ topic exchange, routing is based on patterns in the binding key.
+- Words are separated by dots
+  - `*` (wildcard) Matches exactly one word.
+  - `#` (hash) Matches zero or more words.
+  - Topic routing keys are split by `.`.
+  - No other wildcard syntax exists in RabbitMQ topic exchanges.
+- Create `Topic-Exchange`
+  - <img src="./_forReadme/image copy 12.png" style="width: 750px" />
+- And bndings
+  - <img src="./_forReadme/image copy 13.png" style="width: 450px" />
+
 ## References
 
 - test
