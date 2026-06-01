@@ -99,6 +99,25 @@ or
   - add bindings: TV -> routingKey: tv
   - add bindings: Mobile -> routingKey: mobile
 
+## Direct exchange - publish with missing routing key
+
+- By default the message is silently dropped by RabbitMQ
+- It CAN be returned to the producer if
+  - on publish `mandatory` flag is `true`
+  - AND we defined ob `channel` -> `ReturnListener addReturnListener(ReturnCallback returnCallback)`
+
+## Direct exchange consumer
+
+- Consumers do not know about exchanges, they work wih queues only
+
+## Consumer program - threads analysis via VisualVM
+
+- Consumers work async under the hood
+  - program with 3 registered consumers
+  - <img src="./_forReadme/image copy 7.png" style="width: 750px" />
+  - dummy java app (for comparison)
+  - <img src="./_forReadme/image copy 8.png" style="width: 750px" />
+
 ## References
 
 - test

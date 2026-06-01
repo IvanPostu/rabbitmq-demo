@@ -7,6 +7,8 @@ pkgs.mkShell {
 
   buildInputs = [
     pkgs.jdk21
+    pkgs.visualvm
+    pkgs.eclipse-mat
   ];
 
   LANG = "en_US.UTF-8";
