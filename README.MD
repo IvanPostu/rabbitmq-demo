@@ -140,6 +140,37 @@ or
 - And bndings
   - <img src="./_forReadme/image copy 13.png" style="width: 450px" />
 
+## Headers exchange
+
+- <img src="./_forReadme/image copy 14.png" style="width: 750px" />
+- there is no routing key, headers are used instead
+- `x-match` binding argument supports these values:
+  - all, any, all-with-x, any-with-x
+- What is `x-`?
+  - Headers beginning with `x-` are normally treated as metadata and ignored during matching
+    - all-with-x, any-with-x forces rabbit to treat them as regular headers
+- Create `Headers-Exchange`, type=headers
+- bind queue to the exchange
+  - <img src="./_forReadme/image copy 15.png" style="width: 650px" />
+  - **order doesn't matter**
+
+  ```txt
+  Mobile
+  x-match=any
+  item1=mobile
+  item2=mob
+  ---
+  TV
+  item1=tv
+  item2=television
+  x-match=any
+  ---
+  AC
+  item1=mobile
+  item2=ac
+  x-match=all
+  ```
+
 ## References
 
 - test

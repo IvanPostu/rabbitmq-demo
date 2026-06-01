@@ -1,14 +1,17 @@
 package com.ipostu.rabbitmq.demo.program1;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
-public class TopicExchangeProduces {
-    private static final String EXCHANGE_NAME = "Topic-Exchange";
+public class HeaderExchangeProducer {
+    private static final String EXCHANGE_NAME = "Headers-Exchange";
 
     public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
         ConnectionFactory factory = new ConnectionFactory();
@@ -26,7 +29,16 @@ public class TopicExchangeProduces {
             System.out.println(returnMessage.getReplyText());
         });
 
-        channel.basicPublish(EXCHANGE_NAME, "tv.mobile.ac", true, null, "Message for Mobile and AC".getBytes());
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("item1", "mobile");
+        headers.put("item2", "television");
+
+        AMQP.BasicProperties basicProperties = new AMQP.BasicProperties()
+                .builder()
+                .headers(headers)
+                .build();
+
+        channel.basicPublish(EXCHANGE_NAME, "", true, basicProperties, "Message for Mobile and TV".getBytes());
 
         Thread.sleep(10_000);
 
