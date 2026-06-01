@@ -47,6 +47,9 @@ docker start rabbitmq
 # http://localhost:15672
 # username: guest
 # password: guest
+
+# JDK generate serialVersionUID
+serialver -classpath boot1/target/classes/ com.ipostu.rabbitmq.demo.boot1.Person
 ```
 
 ## Other
