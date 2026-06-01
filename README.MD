@@ -118,6 +118,14 @@ or
   - dummy java app (for comparison)
   - <img src="./_forReadme/image copy 8.png" style="width: 750px" />
 
+## Fanout exchange
+
+- Unlike a direct exchange which routes messages based on a routing key, a fanout exchange sends messages to all bound queues
+  - <img src="./_forReadme/image copy 9.png" style="width: 750px" />
+  - <img src="./_forReadme/image copy 10.png" style="width: 750px" />
+  - bind: AC and Mobile to the **Fanout-Exchange**
+  - on publish, routing key must be empty string, not null
+
 ## References
 
 - test
