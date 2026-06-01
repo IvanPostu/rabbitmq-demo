@@ -171,6 +171,38 @@ or
   x-match=all
   ```
 
+## Spring boot setup
+
+- required dependencies
+
+  ```xml
+  <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-amqp</artifactId>
+  </dependency>
+
+  <dependency>
+      <groupId>org.springframework.amqp</groupId>
+      <artifactId>spring-rabbit</artifactId>
+      <scope>compile</scope>
+  </dependency>
+  ```
+
+- send to queue `rabbitTemplate.convertAndSend("Mobile", person);`
+- serialization is done on `SimpleMessageConverter`'s side
+- by default it uses Java's serialization API via `SimpleMessageConverter`, so pojo must implement `Serializable`
+  - to use jackson converter define explicitly:
+
+    ```java
+    @Bean
+    public MessageConverter messageConverter() {
+        return new JacksonJsonMessageConverter();
+    }
+    ```
+
+- <img src="./_forReadme/image copy 16.png" style="width: 950px" />
+- <img src="./_forReadme/image copy 17.png" style="width: 550px" />
+
 ## References
 
 - test
