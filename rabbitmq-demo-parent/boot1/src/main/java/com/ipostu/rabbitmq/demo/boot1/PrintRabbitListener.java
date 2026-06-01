@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PrintRabbitListener {
 
-    @RabbitListener(queues = {"Mobile"})
+//    @RabbitListener(queues = {"Mobile"})
     public void consume(Person person, Message message) {
         log.info("Consumed: {}", person);
 
