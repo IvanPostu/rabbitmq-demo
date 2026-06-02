@@ -174,6 +174,12 @@ or
   x-match=all
   ```
 
+## Default exchange
+
+- <img src="./_forReadme/image copy 18.png" style="width: 650px" />
+- When a message is sent directly to the queue (with empty exchange), the underline logic uses default exchange which is automatically bound to all queues
+- can't be deleted
+
 ## Spring boot setup
 
 - required dependencies
