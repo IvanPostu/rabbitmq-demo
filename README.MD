@@ -262,6 +262,34 @@ or
 - Handles delivery
 - Decoupling
 
+### Message broker - concepts
+
+- Producer - app/service that produces message to RabbitMQ
+- Consumer - app/service that receives message from RabbitMQ
+- Queue - storage for messages
+  - on acknowledgment message is removed from queue
+- Exchange - routing mechanism
+  - direct - by routing key
+  - fanout - clones message to all queues
+  - topic - pattern matching of routing key
+  - headers - condition: all/any headers key values
+- Binding - link between exchange and queue
+- Routing key - string that determines where the message will go
+  - is used by: direct and topic
+
+  ---
+
+- Message
+  - body - any kind of data, including binary
+  - headers/properties - key/value pairs
+
+- Acknowledgment - signal that tells to the broker that consumer processed the message successfully
+  - on success removes the message from the queue
+  - on error the message is re-queued
+- Virtual host - logical separation, no interference
+- Clustering - distribute workload across multiple servers (single logical broker)
+- Management plugins - web-based interface for management
+
 ## References
 
 - test
