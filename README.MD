@@ -345,6 +345,48 @@ or
 - on failure consumer sends `nack` to the broker and re-queues the message
 - if nothing is sent broker considers as failure and re-queues the message
 
+## Limitations/shortcomings/cons RabbitMQ
+
+- Performance overhead
+  - to ensure durability it writes to the disk, which is less performant comparing to kafka
+- Complexity in clustering
+- Limited support for long running tasks
+  - not good for case when the message arrives and ack/nack is replied late
+- scaling and throughput limitation
+- limited features for streaming processing
+
+## RabbitMQ vs. Apache Kafka
+
+- Message Delivery
+
+  - RMQ uses message queues
+  - Kafka uses topic-based
+
+- Use Case
+
+  - RMQ is best for real-time message brokering
+  - Kafka is primarily designed for high throughput, distributed streaming
+
+- Throughput
+
+  - RMQ throughput is lower compared to Kafka (due to disk base ops)
+  - Kafka is built for high throughput
+
+- Message Durability
+
+  - RMQ: messages can be made persistent
+  - Kafka retains messages for a defined period
+
+- Scaling
+
+  - RMQ can scale horizontally
+  - Kafka is designed for horizontal scaling
+
+- Protocol Support
+
+  - RMQ implements AMQP but also supports others
+  - Kafka uses its own Kafka protocol
+
 ## References
 
 - test
