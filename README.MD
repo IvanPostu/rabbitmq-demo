@@ -281,7 +281,7 @@ or
 
 - Message
   - body - any kind of data, including binary
-  - headers/properties - key/value pairs
+  - metadata/headers/properties - key/value pairs
 
 - Acknowledgment - signal that tells to the broker that consumer processed the message successfully
   - on success removes the message from the queue
@@ -289,6 +289,61 @@ or
 - Virtual host - logical separation, no interference
 - Clustering - distribute workload across multiple servers (single logical broker)
 - Management plugins - web-based interface for management
+
+## AMPQ - Advanced Message Queuing Protocol
+
+- Open standard for messaging and is the primary protocol used by RabbitMQ
+- defines the structure of messages, the interaction between brokers, producers and consumers in a messaging system
+- Key Features
+  - Reliable Delivery
+  - Queuing
+  - Routing
+  - Security
+  - Flow control (back-pressure)
+- Interoperability
+
+### MQTT (Message Queuing Telemetry Transport)
+
+- IOT
+
+### STOMP (Simple Text Oriented Messaging Protocol)
+
+### HTTP
+
+| Feature | AMQP | MQTT | STOMP | HTTP |
+|----------|------|------|-------|------|
+| Message Delivery Guarantees | Guaranteed delivery, persistent messages, acknowledgements | Basic delivery guarantees | Basic delivery guarantees | No guarantees for message delivery |
+| Routing Flexibility | Complex routing with exchanges, routing keys, and bindings | Simple pub/sub model, no complex routing | Simple pub/sub model, no complex routing | No native routing, just request/response |
+| Security | Advanced security features (authentication, encryption) | Limited security (depends on implementation) | Limited security (depends on implementation) | Limited security (depends on HTTPS setup) |
+| Use Case | Large-scale, mission-critical, enterprise systems | IoT, low bandwidth environments | Simple messaging for web apps | Web-based applications, microservices |
+| Protocol Complexity | More complex, feature-rich | Very simple, lightweight | Simple text-based protocol | Very simple, used for HTTP requests |
+
+## AMPQ message structure
+
+### Metadata/headers/properties
+
+- Delivery Mode (transient/persistent)
+- Message ID
+- Timestamp
+- Priority
+- Content-Type
+- Content-Encoding
+- Correlation ID
+- Reply-to
+- TTL/Expiration
+- User-Defined Headers
+
+### Body/payload
+
+- Text
+- Binary Data
+- Serialized Objects
+
+### Acknowledgment
+
+- on success consumer sends `ack` to the broker
+- on failure consumer sends `nack` to the broker and re-queues the message
+- if nothing is sent broker considers as failure and re-queues the message
 
 ## References
 
