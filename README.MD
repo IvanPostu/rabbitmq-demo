@@ -212,6 +212,56 @@ or
 - <img src="./_forReadme/image copy 16.png" style="width: 950px" />
 - <img src="./_forReadme/image copy 17.png" style="width: 550px" />
 
+## Erlang
+
+- Concurrent & functional programming language
+- Was developed in the 1980 by Joe Armstrong, Robert Wording and Mike Williams at Ericsson
+- Primarily for telecommunications to handle millions of concurrent connections
+- No downtime due to hot code update at language level
+- Is actively used in messaging systems, financial systems and telecommunication
+
+## Similar technologies
+
+- JMS (Java message Service) - tied to java
+- ActiveMQ
+- ZeroMQ - no central broker / peer-to-peer communication / not as reliable
+- IBM MQ (WebSphere MQ) - commercial
+
+## RabbitMQ general aspects
+
+### Message broker - pros
+
+- Decoupled components - producers/consumers do not know about each other
+- Async way of communication
+- Enhanced scalability
+- Fault tolerant - massages aren't lost if they arrive in RabbitMQ
+- Multiple protocols, main one is AMPQ
+
+### What problems does it solve
+
+- Message queuing
+- Message routing
+- Guaranteed message delivery - message persistence and acknowledgments
+- Load balancing
+- Real time communication
+
+### Is good for
+
+- Microservices - indirect communication
+- Event driven architecture
+- Real-time systems
+
+### Message broker
+
+- A middleware that allows producers/consumers to communicate without knowing about each other
+- Async
+- Persistent
+- Queuing
+- Routing
+- Transformation
+- Handles delivery
+- Decoupling
+
 ## References
 
 - test
