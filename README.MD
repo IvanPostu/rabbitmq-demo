@@ -387,6 +387,67 @@ or
   - RMQ implements AMQP but also supports others
   - Kafka uses its own Kafka protocol
 
+## Queue
+
+- FIFO
+- Types:
+  - Simple queue
+  - Circular queue
+  - Priority queue
+  - Double-Ended queue
+
+- In erlang each queue is represented as a separate erlang process
+  - process has its own state and processing logic
+  - message lives in the process
+
+## Network layer
+
+- OSI (Open System Interconnection), layers:
+  - Application
+  - Presentation
+  - Session
+  - Transport
+  - Network
+  - Data link
+  - Physical
+
+- TCP(Transmission control protocol) / IP, layers:
+  - Application
+  - Transport
+  - Internet
+  - Link
+
+RabbitMQ uses TCP sockets
+
+## RabbitMQ Architecture
+
+- Exchanges
+  - direct
+  - fanout
+  - topic
+  - headers
+- Queues
+  - durable queue (queue definition survives broker restart)
+  - persistent message (producer) - same as durable, but related to the message
+  - exclusive queue - used by the connection that created them, once the connection is closed the message is deleted
+- Bindings
+- Producers
+- Consumers
+  - supports multiple consumers per queue for parallel processing
+- Channels
+  - virtual connection inside the TCP connection
+- Virtual Hosts
+  - isolated environment
+  - can be controlled via permissions
+- Connections
+  - TCP connection client->broker
+- Acknowledgments
+  - ack - success
+  - nack - failure -> redeliver
+  - timeout - failure -> redeliver
+- Dead-letter - when TTL expires or after N redeliver failure actions the message goes to the special exchange for dead-letter
+- Persistence(message) - persistent survives broker restart, non-persistent NOT
+
 ## References
 
-- test
+- test16done
