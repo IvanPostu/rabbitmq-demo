@@ -50,6 +50,19 @@ docker start rabbitmq
 
 # JDK generate serialVersionUID
 serialver -classpath boot1/target/classes/ com.ipostu.rabbitmq.demo.boot1.Person
+
+## Rabbitmqctl
+docker exec -it rabbitmq bash
+
+rabbitmqctl status
+rabbitmqctl list_queues
+rabbitmqctl list_exchanges
+rabbitmqctl list_users
+rabbitmqctl list_queues name type leader members
+
+rabbitmq-plugins enable rabbitmq_management
+rabbitmq-plugins disable rabbitmq_management
+rabbitmq-plugins list
 ```
 
 ## Other
@@ -473,6 +486,107 @@ RabbitMQ uses TCP sockets
 | 4368 | Stream Broker | Streaming messages in RabbitMQ | AMQP / HTTP |
 | 9100 | STOMP over WebSocket | STOMP protocol over WebSockets | STOMP / WebSocket |
 | 5673 | AMQP for another node or client | Alternative AMQP connection port for instances | AMQP |
+
+## RabbitMQ Acknowledgment Modes
+
+| Ack Mode | Description | When to Use |
+|-----------|-------------|-------------|
+| Nack Message Requeue True | Negative acknowledgment, message requeued for retry | Use for transient issues where retrying makes sense |
+| Automatic Ack | Message automatically acknowledged when delivered to consumer | Use for stateless or non-critical message processing |
+| Reject Requeue True | Message rejected but requeued for retry | Use when message needs reprocessing after failure |
+| Reject Requeue False | Message rejected and discarded (not requeued) | Use for permanently invalid or useless messages |
+
+**Reject Requeue True** and **Nack Message Requeue True** behave the same for a single message, but Nack can additionally reject multiple unacknowledged messages in one call.
+
+## RabbitMQ Classic Queue vs Quorum Queue
+
+| Feature | Classic Queue | Quorum Queue |
+|----------|--------------|--------------|
+| Architecture | Single leader queue, optional mirroring | Raft-based distributed queue |
+| High Availability | Via mirrored queues (deprecated) | Built-in replication |
+| Data Safety | Lower | Higher |
+| Message Durability | Good | Very high |
+| Failover | Can lose messages during failures | Automatic leader election with minimal message loss |
+| Consistency | Eventual | Strong consistency (Raft consensus) |
+| Throughput | Higher | Lower than Classic |
+| Latency | Lower | Higher due to replication |
+| Disk Usage | Less | More |
+| Memory Usage | Less | More |
+| Cluster Resilience | Moderate | High |
+| Priority Queue Support | ✅ Yes | ❌ No |
+| Lazy Queue Support | ✅ Yes | ❌ No |
+| Dead Letter Exchange (DLX) | ✅ Yes | ✅ Yes |
+| Message TTL | ✅ Yes | ✅ Yes |
+| Publisher Confirms | ✅ Yes | ✅ Yes |
+| Single Active Consumer | ✅ Yes | ✅ Yes |
+| Recommended for New Deployments | Generally No | Yes |
+| Best Use Case | High-throughput, less critical workloads | Business-critical workloads requiring reliability |
+
+## Classic Queue
+
+### Advantages
+
+- Higher throughput
+- Lower latency
+- Lower disk and memory overhead
+- Supports priority queues
+- Suitable for temporary or non-critical workloads
+
+### Disadvantages
+
+- Mirrored queues are deprecated
+- Less resilient during node failures
+- Higher risk of message loss in cluster failures
+
+### Typical Use Cases
+
+- Logging
+- Metrics collection
+- Notification systems
+- Temporary processing workloads
+
+## Quorum Queue (quorum means majority)
+
+### Advantages
+
+- Built-in high availability
+- Raft consensus ensures strong consistency
+- Better protection against message loss
+- Automatic leader election during node failures
+- Recommended for production systems
+
+### Disadvantages
+
+- Higher resource consumption
+- Lower throughput compared to Classic queues
+- Does not support priority queues
+
+### Typical Use Cases
+
+- Order processing
+- Payment processing
+- Inventory management
+- Event-driven microservices
+- Workflow orchestration
+
+## Rule of Thumb
+
+```text
+Business-critical messages -> Quorum Queue
+High-throughput, less critical workloads -> Classic Queue
+```
+
+## RabbitMQ Classic Queue vs Quorum Queue
+
+| Feature | Classic Queue | Quorum Queue |
+|----------|--------------|--------------|
+| Replication | Optional (Mirrored*) | Always (Raft-based) |
+| Consistency | Weak (possible data loss) | Strong (data safety) |
+| Performance | Faster | Slower due to replication |
+| Failover | Manual (or Mirrored*) | Automatic leader election |
+| Best For | Speed, simple workloads | High durability, critical data |
+
+\* Mirrored Classic Queues are deprecated in modern RabbitMQ versions.
 
 ## References
 
