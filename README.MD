@@ -448,6 +448,32 @@ RabbitMQ uses TCP sockets
 - Dead-letter - when TTL expires or after N redeliver failure actions the message goes to the special exchange for dead-letter
 - Persistence(message) - persistent survives broker restart, non-persistent NOT
 
+## Docker
+
+- Images
+- Containers
+- Engine(server) / cli(client)
+- Hub and Registries
+- Volumes
+- Network
+  - Bridge - internal network shared across containers
+  - Host - containers have an access to the host's network
+  - Overlay - inter-host connection between containers
+
+## RabbitMQ Ports
+
+| Port | Purpose | Use Case | Protocol |
+|------|---------|----------|----------|
+| 5672 | AMQP (default) | Communication for producers and consumers | AMQP 0.9.1 / 1.0 |
+| 15672 | HTTP Management UI | Web interface for RabbitMQ management | HTTP |
+| 15692 | Prometheus HTTP Exporter | Exposing RabbitMQ metrics to Prometheus | HTTP / Prometheus |
+| 25672 | Clustering / Inter-node communication | RMQ node-to-node clustering communication | Erlang distribution |
+| 5671 | AMQP over TLS/SSL | Secure AMQP communication over TLS | AMQP over TLS/SSL |
+| 4369 | EPMD (Erlang Port Mapper Daemon) | Discovery and communication between nodes | Erlang |
+| 4368 | Stream Broker | Streaming messages in RabbitMQ | AMQP / HTTP |
+| 9100 | STOMP over WebSocket | STOMP protocol over WebSockets | STOMP / WebSocket |
+| 5673 | AMQP for another node or client | Alternative AMQP connection port for instances | AMQP |
+
 ## References
 
-- test16done
+- test21done
