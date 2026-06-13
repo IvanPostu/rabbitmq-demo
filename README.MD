@@ -646,6 +646,92 @@ We **CAN** publish message but **CANNOT** consume them via rabbitmq management U
   - pass test
   - pass test.abc.cde
 
+## Messaging patterns
+
+- **Simple Queue Pattern** — A producer sends messages to a queue, and a single consumer processes them one at a time.
+
+- **Work/Task Queue Pattern** — Multiple workers share a queue to distribute and process tasks in parallel.
+
+- **Pub-Sub (Fanout) Pattern** — A message is broadcast to all subscribed consumers simultaneously.
+
+- **Routing Pattern** — Messages are delivered to specific consumers based on routing keys or rules.
+
+- **Dead Letter Pattern** — Failed, rejected, or expired messages are moved to a separate queue for analysis or retry.
+
+- **Delayed Messaging Pattern** — Messages are held for a specified time before being delivered to consumers.
+
+- **Request-Reply Pattern** — A client sends a request message and waits for a corresponding response message.
+
+## Dead letter exchange
+
+- create
+  - exchange `x.dlx`
+    - `q.dead.letter`
+    - bind with routing key `main`
+  - exchange `x.direct`
+    - `q.main` (`x-dead-letter-exchange=x.dlx`)
+    - bind with routing key `main`
+
+Observation 1: routing key is set automatically `main` when the message is sent from `q.main` to `x.dlx`
+
+Observation 2: if the message is published using default exchange, it won't be dead lettered in case of failure (because the routing key is `q.main`)
+
+- <img src="./_forReadme/image copy 20.png" />
+- <img src="./_forReadme/image copy 21.png" />
+- `q.dead.letter` is empty
+
+Observation 3: publishing to the exchange with routing key `main`
+
+- <img src="./_forReadme/image copy 23.png" />
+- <img src="./_forReadme/image copy 24.png" />
+- <img src="./_forReadme/image copy 25.png" />
+- <img src="./_forReadme/image copy 26.png" />
+
+Observation 4:
+
+- publish message to `x.direct` with routing key `q.main`
+  - error: Message published, but not routed.
+
+- publish message to `(AMQP default)` with routing key `q.main`
+  - Message published.
+- message is present in `q.main`
+- `Reject requeue false`
+- Message was removed and NOT moved to the `q.dead.letter` because routing key didn't match
+
+- **Problem!!!** we will need to create for each routing key a separate dead letter queue, solution is dead letter routing key
+
+## Dead letter exchange - dead letter routing key
+
+- create/use existing
+  - existing exchange `x.dlx`
+    - `q.dead.letter2`
+    - bind with routing key `dead-letter-key`
+  - existing exchange `x.direct`
+    - `q.main2` (`x-dead-letter-exchange=x.dlx` **AND** `x-dead-letter-routing-key=dead-letter-key`)
+    - bind with routing key `main2`
+
+- publish message with routing key `main2`
+- message appears in the `q.main2`
+- Get message: `reject requeue false`
+- Message goes to `q.dead.letter2`
+
+## Dead letter exchange - queue with x-message-ttl AND x-max-length
+
+- x-message-ttl - milliseconds
+- x-max-length - max number of messages in the queue, if greater than remove from the end
+
+Create a queue `q.main3`
+
+- `x-message-ttl=20000`
+- `x-max-length=10`
+- `x-dead-letter-exchange=x.dlx`
+- `x-dead-letter-routing-key=dead-letter-key`
+- bind to `x.direct`, routing key `main3`
+- publish message
+  - it appears in the queue
+  - after 20 seconds it is dead lettered
+- publish 11 messages, first one is dead lettered
+
 ## References
 
-- test40done
+- test41done
