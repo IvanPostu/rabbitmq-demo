@@ -75,6 +75,7 @@ rabbitmq-plugins list
   - Fanout
   - Header
   - Topic
+  - X-Local-Random Exchange - routes a message to one randomly selected queue that is local to the node where the message was published
 
 - Install rabbitmq
   - install erlang OTP
@@ -588,6 +589,63 @@ High-throughput, less critical workloads -> Classic Queue
 
 \* Mirrored Classic Queues are deprecated in modern RabbitMQ versions.
 
+## Http API
+
+```txt
+http://localhost:15672/api/exchanges
+```
+
+- <img src="./_forReadme/image copy 19.png" style="width: 550px" />
+
+## Rabbitmq stream
+
+# Stream
+
+| Feature | Streams | Classic Queues | Quorum Queues |
+|----------|----------|----------|----------|
+| **Message Storage** | Log-based, messages stay for a set time | FIFO, messages are removed once consumed | FIFO, replicated across nodes |
+| **Performance** | High-throughput | Medium | Medium |
+| **Consumer Model** | Multiple consumers can read the same message at different times | Message is deleted after acknowledgment | Message is deleted after acknowledgment |
+| **Replication** | Not Raft-based, but supports mirroring | None (single node) | Uses Raft-based replication |
+| **Ordering** | Preserves strict ordering | Maintains FIFO order | Maintains FIFO order |
+| **Use Case** | Event streaming, analytics, time series data | Traditional messaging | High availability, fault tolerance |
+
+## Work with streams
+
+```sh
+rabbitmq-plugins enable rabbitmq_stream
+rabbitmq-plugins enable rabbitmq_stream_management
+```
+
+We **CAN** publish message but **CANNOT** consume them via rabbitmq management UI
+
+## Exchange
+
+- Auto delete - if last queue is unbind then exchange  is deleted
+- Internal - exchange to exchange communication ONLY
+- Alternate Exchange (AE) - fallback exchange for messages that the primary exchange cannot route to any queue
+
+## Naming convention
+
+- Exchange good: `orders.exchange`
+- Exchange good: `<appname>.orders.exchange`
+- Queue good: `payment.processing.queue`
+
+## Direct exchange
+
+- If there are no queues bound to that routing key the message is lost
+
+## Topic exchange
+
+- test.* - exactly one
+  - pass test.abc
+  - do not pass test
+  - do not pass test.abc.cde
+- test.# - zero or many
+  - pass test.abc
+  - pass test
+  - pass test.abc.cde
+
 ## References
 
-- test21done
+- test40done
